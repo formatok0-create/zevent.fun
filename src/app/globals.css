@@ -1,0 +1,811 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════
+   ZEVENT — DESIGN SYSTEM
+   Direction : editorial luxury · paper & silk · warm ivory
+   Regles : filets plutot qu'ombres · rayons quasi nuls ·
+            or en accent uniquement · mouvement lent
+   ═══════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* Les très petits téléphones méritent leur point d’arrêt. */
+  --breakpoint-xs: 26rem;
+  /* ── Couleurs ─────────────────────────────────────────────── */
+  --color-ivory: #faf7f2;
+  --color-ivory-deep: #f3ede4;
+  --color-surface: #fffdfc;
+  --color-ink: #241f1d;
+  --color-ink-soft: #756a64;
+  --color-ink-faint: #a79d95;
+  --color-line: #e9e1d7;
+  --color-line-strong: #d8cdbe;
+  --color-champagne: #d8c3a5;
+  --color-champagne-soft: #ede2d2;
+  --color-rose: #e8d7d2;
+  --color-rose-soft: #f6ece9;
+  --color-burgundy: #5a2932;
+  --color-burgundy-deep: #3f1c23;
+  --color-brown: #6b5147;
+  --color-gold: #b89b6a;
+  --color-gold-soft: #cdb68d;
+  --color-noir: #1a1512;
+
+  /* — La fete : nuit prune et flamme (produit anniversaire) — */
+  --color-nuit-fete: #171310;
+  --color-prune: #2a1a2e;
+  --color-flamme: #e9a13b;
+  --color-success: #4a6a52;
+  --color-danger: #8c3a3a;
+
+  /* ── Typographie ──────────────────────────────────────────── */
+  --font-display: var(--f-bodoni), "Bodoni Moda", Didot, Georgia, serif;
+  --font-sans: var(--f-jost), Jost, Futura, ui-sans-serif, sans-serif;
+  --font-script: var(--f-cormorant), "Cormorant Garamond", Garamond, serif;
+  /* La fete parle en geometrique : lisible en gras, loin de la didone. */
+  --font-fete: var(--f-outfit), ui-sans-serif, sans-serif;
+  /* Les deux voix de la direction cerise. */
+  --font-deck: var(--f-playfair), Didot, Georgia, serif;
+  --font-grotesk: var(--f-montserrat), ui-sans-serif, sans-serif;
+  /* La ronde de la voix agrume. */
+  --font-rond: var(--f-fredoka), ui-rounded, ui-sans-serif, sans-serif;
+
+  /* ── Rayons : presque rien, jamais de pilule ──────────────── */
+  --radius-xs: 1px;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+
+  /* ── Courbes de mouvement ─────────────────────────────────── */
+  --ease-silk: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-paper: cubic-bezier(0.33, 0.02, 0, 0.98);
+}
+
+/* ═══ Base ═══════════════════════════════════════════════════ */
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ivory);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    letter-spacing: 0.005em;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    letter-spacing: -0.015em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  ::selection {
+    background: var(--color-champagne);
+    color: var(--color-ink);
+  }
+
+  /* Focus : un liseré or, jamais un halo bleu système */
+  :focus-visible {
+    outline: 1px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  input, textarea, select, button { font: inherit; color: inherit; }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-ink-faint);
+    font-weight: 300;
+  }
+
+  ::-webkit-scrollbar { width: 9px; height: 9px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-line-strong);
+    border: 3px solid var(--color-ivory);
+    border-radius: 99px;
+  }
+}
+
+/* ═══ Utilitaires maison ═════════════════════════════════════ */
+
+@layer utilities {
+  /* Le label capitale ultra-espacé — la voix de la marque */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+
+  .eyebrow-sm {
+    font-family: var(--font-sans);
+    font-size: 0.5625rem;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .numeral {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-variant-numeric: lining-nums;
+    letter-spacing: 0.02em;
+  }
+
+  /* Le grain papier : donne de la matière à l'ivoire */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+  }
+
+  .rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-line-strong) 12%,
+      var(--color-line-strong) 88%,
+      transparent
+    );
+  }
+
+  .rule-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  }
+
+  /* Lien éditorial : le trait se dessine depuis la gauche */
+  .link-draw { position: relative; display: inline-block; }
+  .link-draw::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.7s var(--ease-silk);
+  }
+  .link-draw:hover::after { transform: scaleX(1); transform-origin: left; }
+
+  .vertical-label { writing-mode: vertical-rl; text-orientation: mixed; }
+
+  .paper {
+    background:
+      radial-gradient(120% 90% at 50% 0%, #fffdfb 0%, transparent 55%),
+      var(--color-ivory);
+  }
+
+  .shell {
+    width: 100%;
+    max-width: 82rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+  @media (min-width: 768px) { .shell { padding-inline: 2.5rem; } }
+  @media (min-width: 1280px) { .shell { padding-inline: 3.5rem; } }
+
+  .reveal-plate { will-change: transform, filter, opacity; }
+}
+
+/* ═══ Animations ═════════════════════════════════════════════ */
+
+@keyframes zv-fade-up {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes zv-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes zv-rotate { to { transform: rotate(360deg); } }
+@keyframes zv-shimmer { 100% { transform: translateX(100%); } }
+@keyframes zv-breathe { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+.anim-fade-up { animation: zv-fade-up 1.1s var(--ease-silk) both; }
+.anim-fade { animation: zv-fade 1.4s var(--ease-silk) both; }
+
+/* ═══ Accessibilité : mouvement réduit ═══════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ═══ SIGNATURE — L'ARCHE ════════════════════════════════════
+   Le motif de la maison : toute image, tout aperçu, tout portrait
+   est cadré par une arche de chapelle. C'est l'élément unique dont
+   on se souvient. Utilisé partout, jamais décoré.
+   ═══════════════════════════════════════════════════════════ */
+
+@layer utilities {
+  .arch {
+    border-radius: 50% 50% 2px 2px / 34% 34% 2px 2px;
+  }
+  .arch-tall {
+    border-radius: 50% 50% 2px 2px / 26% 26% 2px 2px;
+  }
+  .arch-low {
+    border-radius: 50% 50% 2px 2px / 14% 14% 2px 2px;
+  }
+
+  /* ═══ SIGNATURE — LE QUADRILOBE ══════════════════════════════
+     Ce que l'arche est au mariage, le quadrilobe l'est a la fete.
+     Cotes concaves : impossible en border-radius, c'est un masque. */
+  .quatrefoil {
+    --qf: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,30 A30,30 0 0 1 50,7.64 A30,30 0 0 1 100,30 A30,30 0 0 1 92.36,50 A30,30 0 0 1 100,70 A30,30 0 0 1 50,92.36 A30,30 0 0 1 0,70 A30,30 0 0 1 7.64,50 A30,30 0 0 1 0,30 Z' fill='%23000'/%3E%3C/svg%3E");
+    -webkit-mask-image: var(--qf);
+    mask-image: var(--qf);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+
+  /* L'invitation est un conteneur : ses tailles se mesurent sur sa
+     propre largeur, pas sur celle de la fenetre. C'est ce qui permet
+     de la rendre en petit dans l'apercu sans que rien ne deborde. */
+  .zv-canvas {
+    container-type: inline-size;
+  }
+
+  /* Le fil des etapes : un fondu a droite dit qu'il en reste. Il
+     disparait des que le rail tient en entier. */
+  .zv-rail-etapes {
+    -webkit-mask-image: linear-gradient(to right, #000 0, #000 88%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 0, #000 88%, transparent 100%);
+  }
+  @media (min-width: 768px) {
+    .zv-rail-etapes {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+
+  /* Le rail de l'album : on fait glisser, on ne voit pas la barre. */
+  .zv-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* La vignette d'une collection : la premiere page de l'invitation,
+     en reduction. Les sections d'ouverture reservent 32 a 34 rem de
+     hauteur en mode compact — de quoi remplir un telephone, pas une
+     vignette de 200 px. On les ramene a la boite, et on resserre les
+     marges verticales qui allaient avec. */
+  .zv-vignette .zv-canvas > * > section,
+  .zv-vignette .zv-canvas > section {
+    min-height: 100%;
+    height: 100%;
+    padding-top: 6cqw;
+    padding-bottom: 6cqw;
+  }
+
+  /* Plaque de fete : nuit prune, une flamme qui monte du bas. */
+  .plate-fete {
+    background:
+      radial-gradient(70% 55% at 50% 84%, rgba(233, 161, 59, 0.34), transparent 62%),
+      radial-gradient(80% 60% at 26% 12%, rgba(233, 161, 59, 0.12), transparent 58%),
+      linear-gradient(158deg, var(--color-prune), var(--color-nuit-fete));
+  }
+
+  /* Plaque photo : dégradé chaud utilisé tant qu'aucune image n'est
+     fournie. Jamais d'illustration générique. */
+  .plate {
+    background:
+      radial-gradient(90% 60% at 30% 18%, rgba(255, 253, 251, 0.85), transparent 60%),
+      linear-gradient(155deg, var(--plate-from, #efe3d2), var(--plate-to, #d9c3aa));
+  }
+
+  .plate-dark {
+    background:
+      radial-gradient(80% 55% at 28% 15%, rgba(216, 195, 165, 0.28), transparent 62%),
+      linear-gradient(160deg, #5a2932, #2c1418);
+  }
+
+  /* Cadre décalé : un filet or qui déborde de l'image. */
+  .frame-offset::before {
+    content: "";
+    position: absolute;
+    inset: -0.75rem -0.75rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--color-gold) 45%, transparent);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .tabular { font-variant-numeric: tabular-nums lining-nums; }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+}
+
+/* ═══ LA VOIX CERISE — le mariage ════════════════════════════
+   Une seule classe repeint tout le produit mariage : elle ne fait
+   que redefinir les jetons que les utilitaires consomment deja
+   (bg-ivory lit --color-ivory, text-gold lit --color-gold…). Aucun
+   composant ne connait ce theme, et la fete n'y touche pas.
+
+   Blanc pur et bordeaux #550812 — les deux couleurs relevees dans la
+   reference. Playfair Display en tres gras pour les titres,
+   Montserrat en capitales espacees pour tout le reste, et le bouton
+   redevient une pastille.
+   ═══════════════════════════════════════════════════════════ */
+
+@layer utilities {
+  .voix-cerise {
+    /* ── Les fonds : blanc pur, rien d'autre ────────────────── */
+    --color-ivory: #ffffff;
+    --color-ivory-deep: #f8f3f4;
+    --color-surface: #ffffff;
+
+    /* ── L'encre : le gris presque noir de la navigation ────── */
+    --color-ink: #1a1718;
+    --color-ink-soft: #58504f;
+    --color-ink-faint: #948a8b;
+
+    /* ── Les filets ─────────────────────────────────────────── */
+    --color-line: #ece2e3;
+    --color-line-strong: #d8c7ca;
+
+    /* ── Les aplats : le bordeaux de la reference ───────────── */
+    --color-burgundy: #550812;
+    --color-burgundy-deep: #350a13;
+    --color-noir: #16090c;
+
+    /* ── L'accent : un rouge vin qui se lit sur blanc ───────── */
+    --color-gold: #8e1428;
+    --color-gold-soft: #c08d95;
+
+    /* ── Les teintes douces : rose cendre ───────────────────── */
+    --color-champagne: #e7d3d6;
+    --color-champagne-soft: #f6edee;
+    --color-rose: #e7d3d6;
+    --color-rose-soft: #f8f0f1;
+    --color-brown: #6b4a4e;
+    --color-danger: #8e1428;
+
+    /* ── Les rayons : la reference arrondit, la maison non ──── */
+    --radius-xs: 3px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+
+    /* ── Les deux ecritures ─────────────────────────────────── */
+    --font-display: var(--font-deck);
+    --font-sans: var(--font-grotesk);
+
+    /* La famille du corps est calculee sur `body` : sans cette ligne,
+       les descendants heriteraient de l'ancienne lineale. */
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+  }
+
+  /* Le fond blanc, la ou le theme couvre une page entiere. Le z-index
+     passe la page au-dessus du grain de papier pose sur `body` : le
+     blanc doit rester pur. */
+  .fond-cerise {
+    position: relative;
+    z-index: 1;
+    background: #ffffff;
+  }
+
+  /* ── Les titres : Playfair en tres gras ───────────────────
+     C'est le premier changement qu'on voit — la reference n'a aucune
+     romaine fine, tout est plein et tres serre. */
+  .voix-cerise :is(h1, h2, h3, h4) {
+    font-weight: 800;
+    letter-spacing: -0.022em;
+    /* 1.02 collait : les descendantes de Playfair, surtout en
+       italique, touchaient la ligne suivante. */
+    line-height: 1.06;
+  }
+
+  /* L'italique reste le seul contrepoint dans un titre. */
+  .voix-cerise :is(h1, h2, h3, h4) :is(em, i, .italic) {
+    font-weight: 700;
+  }
+
+  /* ── Les intitules : capitales espacees, un cran plus gras ── */
+  .voix-cerise .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+  }
+
+  .voix-cerise .eyebrow-sm {
+    font-family: var(--font-sans);
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+  }
+
+  .voix-cerise .numeral {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Le bouton redevient une pastille ─────────────────────
+     La reference n'a que des pastilles : le rectangle a 2 px de la
+     maison ne lui appartient pas. Le cadre decale suit la forme et
+     passe au rose cendre, sans quoi il disparait sur le bordeaux. */
+  .voix-cerise .zv-maison {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    /* Montserrat est plus large que Jost : a interlettrage egal, le
+       libelle passait a la ligne et sortait de la pastille. */
+    letter-spacing: 0.07em;
+    white-space: nowrap;
+    border-radius: 9999px;
+  }
+
+  .voix-cerise .zv-maison > span {
+    border-radius: 9999px;
+  }
+
+  .voix-cerise .zv-maison > span[aria-hidden] {
+    border-color: var(--color-gold-soft);
+  }
+
+  .voix-cerise .rule-gold {
+    background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  }
+
+  .voix-cerise ::selection {
+    background: var(--color-burgundy);
+    color: #ffffff;
+  }
+
+  .voix-cerise :focus-visible {
+    outline-color: var(--color-gold);
+  }
+
+  /* ── L'arche du hero ──────────────────────────────────────
+     La plaque se terminait en rectangle : `arch-tall` n'arrondit que
+     le haut, et le bordeaux profond dessinait un bloc carre sous le
+     telephone. Le degrade part donc du sombre en haut — la ou l'arche
+     se voit — et se dissout avant le bas. Plus aucun bord droit. */
+  .plate-arche {
+    background: linear-gradient(
+      168deg,
+      #550812 0%,
+      #7d1526 34%,
+      #d8b3ba 70%,
+      rgba(231, 211, 214, 0) 100%
+    );
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgba(0, 0, 0, 0.4) 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgba(0, 0, 0, 0.4) 80%, transparent 100%);
+  }
+
+  /* Le filet qui double l'arche s'efface de la meme facon : sans ca,
+     ses deux angles inferieurs restaient en l'air. */
+  .filet-arche {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 46%, transparent 88%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 46%, transparent 88%);
+  }
+
+  .voix-cerise .plate-dark {
+    background:
+      radial-gradient(80% 55% at 28% 15%, rgba(231, 211, 214, 0.28), transparent 62%),
+      linear-gradient(160deg, #550812, #350a13);
+  }
+}
+
+/* ═══ LA VOIX AGRUME — l'anniversaire ═════════════════════════
+   Meme mecanique que la voix cerise : la classe redefinit les jetons,
+   aucun composant de la fete ne connait le theme.
+
+   Creme peche #FFE5D4, rouge vif #D0001A, noir profond #3F000A,
+   mandarine #FC8E1F. Fredoka pour les titres, Outfit pour le texte,
+   et tout s'arrondit — la reference n'a pas un seul angle vif.
+   ═══════════════════════════════════════════════════════════ */
+
+@layer utilities {
+  .voix-agrume {
+    /* ── Les fonds : creme peche ────────────────────────────── */
+    --color-ivory: #ffe5d4;
+    --color-ivory-deep: #ffd5bd;
+    --color-surface: #fff4ea;
+
+    /* ── L'encre : le noir profond de la reference ──────────── */
+    --color-ink: #3f000a;
+    --color-ink-soft: #7e2a20;
+    --color-ink-faint: #9c5f50;
+
+    /* ── Les filets ─────────────────────────────────────────── */
+    --color-line: #f7cdb2;
+    --color-line-strong: #efa983;
+
+    /* ── L'accent : le rouge. #EA011E de la reference passe a
+       #D0001A, juste assez sombre pour qu'un intitule de 11 px se
+       lise sur le creme — l'original tombait a 3,8 de contraste. */
+    --color-flamme: #d0001a;
+    --color-mandarine: #fc8e1f;
+    --color-prune: #a80016;
+    --color-nuit-fete: #3f000a;
+
+    --color-champagne: #ffd5bd;
+    --color-champagne-soft: #fff0e4;
+    --color-rose: #ffd5bd;
+    --color-brown: #7e2a20;
+    --color-danger: #d0001a;
+
+    /* Le bouton plein de la fete est rouge, pas bordeaux : c'est le
+       « ORDER NOW » de la reference. */
+    --color-burgundy: #d0001a;
+    --color-burgundy-deep: #a80016;
+
+    /* `gold` est l'accent des composants partages (intitules de
+       PageHeader, filets). Il doit rester lisible sur le creme : la
+       mandarine n'y tient qu'a 1,9 de contraste, le rouge a 4,7. */
+    --color-gold: #d0001a;
+    --color-gold-soft: #ffd5bd;
+
+    /* ── Tout s'arrondit ────────────────────────────────────── */
+    --radius-xs: 6px;
+    --radius-sm: 12px;
+    --radius-md: 18px;
+    --radius-lg: 26px;
+
+    /* ── Les deux ecritures ───────────────────────────────────
+       `--font-display` compte autant que `--font-fete` : les
+       composants partages avec le mariage (PageHeader, titres du
+       parcours) l'utilisent, et ils sortaient en romaine au milieu
+       de la fete. */
+    --font-fete: var(--font-rond);
+    --font-display: var(--font-rond);
+    --font-sans: var(--f-outfit), ui-sans-serif, sans-serif;
+
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+  }
+
+  .fond-agrume {
+    position: relative;
+    z-index: 1;
+    background:
+      radial-gradient(120% 90% at 50% 0%, #fff4ea 0%, transparent 55%),
+      var(--color-ivory);
+  }
+
+  /* Sur le bloc sombre, l'accent passe a la mandarine : le rouge
+     s'eteint sur le noir profond, l'orange y respire. On redefinit le
+     jeton pour tout le sous-arbre — texte, aplats et traces SVG
+     suivent sans qu'aucun composant ait a le savoir. */
+  .voix-agrume .bg-nuit-fete {
+    --color-flamme: #fc8e1f;
+  }
+
+  /* ── Les titres : Fredoka, plein et serre ─────────────────── */
+  .voix-agrume :is(h1, h2, h3, h4) {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+
+  /* ── Les intitules : capitales rondes, bien plantees ──────── */
+  .voix-agrume .eyebrow {
+    font-family: var(--font-fete);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+  }
+
+  .voix-agrume .eyebrow-sm {
+    font-family: var(--font-fete);
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+  }
+
+  .voix-agrume .numeral {
+    font-family: var(--font-fete);
+    font-weight: 700;
+  }
+
+  /* Fredoka est nettement plus large qu'Outfit : a interlettrage egal,
+     « Créer mon invitation » passait a la ligne dans sa pastille. */
+  .voix-agrume .zv-fete {
+    white-space: nowrap;
+    letter-spacing: 0;
+  }
+
+  /* Le cadre decale suit la pastille au lieu de rester carre, et garde
+     la mandarine — ici c'est decoratif, la lisibilite n'entre pas en jeu. */
+  .voix-agrume .zv-fete > span {
+    border-radius: 9999px;
+  }
+
+  .voix-agrume .zv-fete > span[aria-hidden] {
+    border-color: #fc8e1f;
+  }
+
+  .voix-agrume .rule-gold {
+    background: linear-gradient(90deg, transparent, var(--color-flamme), transparent);
+  }
+
+  .voix-agrume ::selection {
+    background: var(--color-flamme);
+    color: #fff4ea;
+  }
+
+  .voix-agrume :focus-visible {
+    outline-color: var(--color-flamme);
+  }
+
+  /* Le quadrilobe : la mandarine monte du bas comme la flamme d'une
+     bougie, sur le noir profond. */
+  .voix-agrume .plate-fete {
+    background:
+      radial-gradient(70% 55% at 50% 84%, rgba(252, 142, 31, 0.5), transparent 62%),
+      radial-gradient(80% 60% at 26% 12%, rgba(208, 0, 26, 0.3), transparent 58%),
+      linear-gradient(158deg, #6d0512, #3f000a);
+  }
+}
+
+/* ═══ LES TEXTES LÉGAUX ═══════════════════════════════════════
+   Le markdown est rendu en HTML brut : aucune classe utilitaire ne
+   peut l'atteindre. On habille donc les balises elles-memes, dans un
+   seul endroit, plutot que de reecrire les textes en JSX.
+   ═══════════════════════════════════════════════════════════ */
+
+.zv-legal {
+  color: var(--color-ink-soft);
+  font-size: 0.9375rem;
+  font-weight: 300;
+  line-height: 1.85;
+}
+
+.zv-legal > :first-child {
+  margin-top: 0;
+}
+
+.zv-legal h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.022em;
+  line-height: 1.08;
+  color: var(--color-ink);
+  margin: 0 0 2rem;
+}
+
+.zv-legal h2 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-ink);
+  margin: 3rem 0 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.zv-legal h3 {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  margin: 2rem 0 0.5rem;
+}
+
+.zv-legal p {
+  margin: 0 0 1.1rem;
+}
+
+.zv-legal strong {
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.zv-legal a {
+  color: var(--color-gold);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.zv-legal :is(ul, ol) {
+  margin: 0 0 1.4rem;
+  padding-left: 1.4rem;
+}
+
+.zv-legal li {
+  margin-bottom: 0.4rem;
+}
+
+.zv-legal ul {
+  list-style: none;
+  padding-left: 1.1rem;
+}
+
+.zv-legal ul > li {
+  position: relative;
+}
+
+/* Un filet plutot qu'une puce ronde : la maison ne pointille pas. */
+.zv-legal ul > li::before {
+  content: "";
+  position: absolute;
+  left: -1.1rem;
+  top: 0.85em;
+  width: 0.5rem;
+  height: 1px;
+  background: var(--color-line-strong);
+}
+
+.zv-legal hr {
+  display: none;
+}
+
+/* Squelettes de chargement : un balayage soie, pas un gris pulsé. */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-line);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--color-surface) 70%, transparent),
+    transparent
+  );
+  animation: zv-shimmer 1.8s var(--ease-paper) infinite;
+}
+
+@keyframes zv-bars {
+  0%, 100% { height: 3px; }
+  50% { height: 12px; }
+}
+
+
+/* ═══ GARDE-FOU DE MISE EN PAGE ══════════════════════════════
+   Une invitation se lit sur un écran de 320 px de large. Aucun
+   bloc ne doit provoquer de défilement horizontal, et aucun mot
+   long (un lieu, une adresse) ne doit sortir de sa colonne. */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+.zv-invitation {
+  overflow-x: clip;
+}
+
+.zv-invitation :is(h1, h2, h3, p, span, dd, dt, li) {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
